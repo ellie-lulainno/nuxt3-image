@@ -10,6 +10,10 @@
   body {
     font-family: '微軟正黑體', Arial, Helvetica, sans-serif;
     text-align: center;
+    padding: 15px;
+  }
+  .set {
+    margin-bottom: 30px;
   }
   a {
     color: #888;
@@ -19,28 +23,58 @@
     margin: 10px auto;
     padding: 10px 15px;
     border-radius: 10px;
-    display: block;
+    display: inline-block;
   }
   a span {
     color: #0065d0;
     font-weight: bold;
   }
+  img {
+    margin: 10px auto;
+    display: inline-block;
+  }
 </style>
 <body style="margin: 0; background-color: #222; color: #eee;">
   <main style="height: 100vh; display: flex; flex-direction: column; align-items: center;">
     <h1>測試社群</h1>
-    <div>
-      開 viber 用下面這段連結
+    <div class="set">
+      開 viber 打電話<br>
       <a href="viber://chat?number=+886930968628" rel="開啟 viber">
         href="<span>viber://chat?number=這裡輸入社群電話</span>"
       </a>
     </div>
-    <div>
-      開 telegram 用下面這段連結
+    <div class="set">
+      需要手機相機掃描 viber QR 碼<br>
+      <img src="img/viber_qr.jpg" style="width: 200px;" alt="">
+    </div>
+    <div class="set">
+      開 viber 分享訊息<br>
+      <a href="viber://forward?text=哩尬襪" rel="開啟 viber">
+        href="<span>viber://forward?text=YourText</span>"
+      </a>
+    </div>
+    <div class="set">
+      開 viber 分享現在連結<br>
+      <a id="viber_share" rel="開啟 viber">
+        <span>
+          var buttonID = "viber_share";<br>
+          var text = "Check this out: ";<br>
+          document.getElementById(buttonID).setAttribute('href',"viber://forward?text=" + encodeURIComponent(text + " " + window.location.href));
+        </span>
+      </a>
+    </div>
+    <div class="set">
+      開 telegram 用下面這段連結<br>
       <a href="https://telegram.me/+886930968628" target="_blank" rel="開啟 telegram">
         href="<span>https://telegram.me/這裡輸入社群電話</span>"
       </a>
     </div>
   </main>
 </body>
+
+<script>
+  var buttonID = "viber_share";
+  var text = "Check this out: ";
+  document.getElementById(buttonID).setAttribute('href',"viber://forward?text=" + encodeURIComponent(text + " " + window.location.href));
+</script>
 </html>
