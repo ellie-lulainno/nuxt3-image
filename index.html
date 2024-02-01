@@ -64,17 +64,93 @@
       </a>
     </div>
     <div class="set">
+      查看我的共用頻道資訊<br>
+      <button onclick="get_account_info()" class="btn" type="button">Blue</button>
+    </div>
+    <div class="set">
       開 telegram 用下面這段連結<br>
       <a href="https://telegram.me/+886930968628" target="_blank" rel="開啟 telegram">
         href="<span>https://telegram.me/這裡輸入社群電話</span>"
       </a>
     </div>
   </main>
+
+  <!-- Start of LiveChat (www.livechat.com) code -->
+  <script>
+    window.__lc = window.__lc || {};
+    window.__lc.license = 17103201;
+    ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
+  </script>
+  <noscript><a href="https://www.livechat.com/chat-with/17103201/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
+  <!-- End of LiveChat code -->
 </body>
 
 <script>
   var buttonID = "viber_share";
   var text = "Check this out: ";
   document.getElementById(buttonID).setAttribute('href',"viber://forward?text=" + encodeURIComponent(text + " " + window.location.href));
+
+  const authToken = '5251495625b33a5f-1e724e15394e2b1c-6f635dfff0545165'
+  let options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: {}
+  }
+
+  function get_account_info() {
+    let update = {
+      'auth_token': authToken
+    }
+    options.body = JSON.stringify(update)
+    fetch('https://chatapi.viber.com/pa/get_account_info', options)
+      .then(data => {
+        if (!data.ok) {
+          throw Error(data.status);
+        }
+        return data.json();
+        }).then(update => {
+          console.log(update);
+          // postman 測試會獲得以下 
+          // {
+          //     "status": 0,
+          //     "status_message": "ok",
+          //     "id": "pa:5931602818572171871",
+          //     "chat_hostname": "SN-CHAT-06_",
+          //     "name": "Dinotaeng 後援會",
+          //     "icon": "https://media-direct.cdn.viber.com/pg_download?pgtp=icons&dlid=0-04-08-9ebb7f89be95ae1f5761ed77a95c9f1a5205d4c0b2bda61e8be10b2a5fad000b&fltp=jpg&imsz=0000",
+          //     "background": "https://media-direct.cdn.viber.com/pg_download?pgtp=backgrounds&dlid=0-04-08-146b782cb2a451c2e2203638d6c65abedece894fc330db8143b0c1431a2ec008&fltp=jpg&imsz=0000",
+          //     "members": [
+          //         {
+          //             "id": "m14zqBUPeIUoKwyfTGYYgg==",
+          //             "name": "Ellie",
+          //             "role": "superadmin"
+          //         }
+          //     ]
+          // }
+        }).catch(e => {
+          console.log(e);
+        });
+  }
+
+  function set_webhook() {
+    let update = {
+      'url': 'https://leafy-kelpie-e5a7b7.netlify.app/',
+      'auth_token': authToken
+    }
+    options.body = JSON.stringify(update)
+    fetch('https://chatapi.viber.com/pa/set_webhook', options)
+      .then(data => {
+        if (!data.ok) {
+          throw Error(data.status);
+        }
+        return data.json();
+        }).then(update => {
+          console.log(update);
+        }).catch(e => {
+          console.log(e);
+        });
+  }
 </script>
 </html>
